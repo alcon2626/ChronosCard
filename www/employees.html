@@ -20,11 +20,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://chronoscard.azurewebsites.net; style-src 'self'; media-src *">
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta http-equiv="Content-Security-Policy" data: gap: https://chronoscard.azurewebsites.net; style-src 'self'; media-src *">
     <link rel="stylesheet" type="text/css" href="css/employees.css" />
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="../../jqwidgets/styles/jqx.base.css" type="text/css" />
     <title>Employees</title>
 </head>
 <body>
@@ -34,9 +35,10 @@
             <h1 id="app-title">ChronosLog</h1>
             <a href="/index.html" class="ui-btn ui-btn-left ui-btn-corner-all ui-icon-home ui-btn-icon-notext" rel="external">Home</a>
         </div>
-
-        <div>Welcome to the employess page, below a list of employees will display </br> once we load all the employees for the current user's company.</div>
-
+        <div>Welcome to the employess page, below a list of employees will display <br /> once we load all the employees for the current user's company.</div>
+        <br />
+        <br />
+        <div id="jqxgrid"></div>
         <footer data-role="footer" data-position="fixed">
             <h4>Chronoslog Time Card &reg; 2019</h4>
         </footer>
@@ -44,7 +46,21 @@
     </div>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/employees.js"></script>
-    <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxmenu.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.pager.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.columnsresize.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.sort.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxdropdownlist.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxgrid.selection.js"></script>
+    <script type="text/javascript" src="../../jqwidgets/jqxlistbox.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
+
 </body>
 </html>
