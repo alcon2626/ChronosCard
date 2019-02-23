@@ -40,7 +40,7 @@
      */
     function onDeviceReady() {
         // Create a connection reference to our Azure Mobile Apps backend 
-        client = new WindowsAzure.MobileServiceClient('https://chronoscard.azurewebsites.net');
+        client = new WindowsAzure.MobileServiceClient('https://capstoneapplication.azurewebsites.net');
 
         if (useOfflineSync) {
             initializeStore().then(setup);
@@ -65,6 +65,7 @@
                 sUSR_Password: 'string',
                 sUSR_Email: 'string',
                 sUSR_logInName: 'string',
+                //sUSR_CompanyOwner: 'string',
                 deleted: 'boolean'
             }
         }).then(function() {
@@ -166,7 +167,7 @@
         console.log(items);
         // Cycle through each item received from Azure and add items to the item list
         if (items[0].sUSR_logInName != "") {
-            window.location.href = "/employees.html"
+            window.location.href = "/employees.html?sUSR_ID=" + items[0].sUSR_ID
         }        
     }
     /**

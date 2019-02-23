@@ -23,6 +23,7 @@
         syncContext, // Offline data sync context
         tableName = 'Company_Employees',
         todoItemTable; // Reference to a table endpoint on backend
+    var emplid;
     var sUSR_ID;
     // Set useOfflineSync to true to use tables from local store.
     // Set useOfflineSync to false to use tables on the server.
@@ -58,7 +59,7 @@
         return store.defineTable({
             name: tableName,
             columnDefinitions: {
-                cE_ID:'string',
+                cE_ID: 'string',
                 sCT_ID: 'string',
                 cE_FirstName: 'string',
                 cE_LastName: 'string',
@@ -67,11 +68,12 @@
                 cE_City: 'string',
                 cE_State: 'string',
                 cE_Zip: 'string',
+                cE_Image: 'string',
                 deleted: 'boolean'
             }
         }).then(function () {
             // Initialize the sync context
-            syncContext = client.getSyncContext();
+            syncContext = client.getSyncContext("");
 
             // Define an overly simplified push handler that discards
             // local changes whenever there is an error or conflict.
@@ -100,28 +102,17 @@
         } else {
             todoItemTable = client.getTable(tableName);
         }
-
         sUSR_ID = getQueryVariable('sUSR_ID');
-        getItems(sUSR_ID);
+        emplid = getQueryVariable('emplid');
+        console.log(emplid);
+        getItems(emplid);
     }
-    function getItems(sUSR_ID) {
+    function getItems(emplid) {
         // Execute a query for uncompleted items and process
         todoItemTable
-            .where({ deleted: false, sCT_ID: sUSR_ID })     // Set up the query
+            .where({ deleted: false, cE_ID: emplid })     // Set up the query
             .read()                         // Read the results
-            .then(buildGrid, handleError);
-    }
-
-    function getQueryVariable(variable) {
-        var query = window.location.search.substring(1);
-        var vars = query.split('&');
-        for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=');
-            if (decodeURIComponent(pair[0]) == variable) {
-                return decodeURIComponent(pair[1]);
-            }
-        }
-        alert('Query variable %s not found', variable);
+            .then(populateInfo, handleError);
     }
 
     /**
@@ -129,48 +120,16 @@
  * @param {TodoItem[]} items an array of todoitem objects
  * @returns {void}
  */
-    function buildGrid(items) {
-        var datastring = "[";
-        for (var i = 0; i < items.length; i++) {
-            datastring +=
-                '{"emplname":"' + items[i].cE_FirstName + ' ' + items[i].cE_LastName
-                + '","empladdress":"' + items[i].cE_Address1 + ' ' + items[i].cE_City + ' ' + items[i].cE_State + ' ' + items[i].cE_Zip
-                + '","empldeleted":"' + items[i].deleted
-                + '","emplid":"' + items[i].cE_ID +'"},'
-        }
-        datastring = datastring.slice(0, -1);
-        datastring += "]";
-        var data = $.parseJSON(datastring);
-        var docsource = {
-            datatype: 'json',
-            datafields: [
-                { "name": "emplname" },
-                { "name": "empladdress" },
-                { "name": "empldeleted" },
-                { "name": "emplid" }
-            ],
-            localdata: data
-        };
-        var cellsrenderer = function (row, columnfield, value, defaulthtml, columnproperties, rowdata) {
-            return '<div style="position:absolute; top:5px; left:5px;"><a href="" onclick="customNavigation(' + rowdata.emplid + ')">' + value + '</a></div>';
-        }
-        var dataAdapter = new $.jqx.dataAdapter(docsource);
-        var maxwidth = $("#body").width();
-        $("#jqxgrid").jqxGrid(
-        {
-            source: dataAdapter,
-            width: "95%",
-            autoheight: true,
-            sortable: true,
-            pageable: true,
-            columnsresize: true,
-                columns: [
-                { text: '#', datafield: 'emplid', width: '3%'},
-                { text: 'Empl Name',    datafield: 'emplname',      width: '27%', cellsrenderer: cellsrenderer},
-                { text: 'Address',      datafield: 'empladdress',   width: '50%' },
-                { text: 'Deleted',      datafield: 'empldeleted',   width: '20%' }
-            ]
-        });
+    function populateInfo(items) {
+        $("#emplfname").text("First Name: " + items[0].cE_FirstName);
+        $("#empllname").text("Last Name: " + items[0].cE_LastName);
+        $("#empladdress1").text("Address1: " + items[0].cE_Address1);
+        $("#empladdress2").text("Address2: " + items[0].cE_Address2);
+        $("#emplcity").text("City: " + items[0].cE_City);
+        $("#emplstate").text("State: " + items[0].cE_State);
+        $("#emplzip").text("Zip: " + items[0].cE_Zip);
+        $("#emplstatus").text("Deleted: " + items[0].deleted);
+        $("#emplimage").attr("src", items[0].cE_Image);
     }
 
 
@@ -184,8 +143,33 @@
         console.error(text);
     }
 
-    window.customNavigation = function (emplid) {
-        console.log(emplid);
-        window.location.href = "/employee.html?emplid=" + emplid + "&sUSR_ID=" + sUSR_ID;
+
+    function getQueryVariable(variable) {
+        var query = window.location.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            if (decodeURIComponent(pair[0]) == variable) {
+                return decodeURIComponent(pair[1]);
+            }
+        }
+        alert('Query variable %s not found', variable);
+    }
+
+    window.deleteEmployee = function () {
+        jConfirm('Are you sure that you want to delete this employee?', 'Confirmation Dialog', function (r) {
+            if (r) {
+                deleteItemHandler(emplid)
+            } else {
+                //do nothing
+            }
+        });        
+    }
+
+    function deleteItemHandler(itemId) { 
+        todoItemTable
+            .del({ cE_ID: itemId })   // Async send the deletion to backend
+            .then(window.location.href = "/employees.html?sUSR_ID=" + sUSR_ID, handleError); // Update the UI
+        event.preventDefault();
     }
 })();

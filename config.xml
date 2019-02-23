@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="com.microsoft.azure.mobileapps.ChronosCard" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" defaultlocale="en-US">
   <name>ChronosCard</name>
   <description>ChronosCard</description>
@@ -112,4 +112,6 @@
   <engine name="android" spec="5.2.1" />
   <engine name="ios" spec="4.2.0" />
   <engine name="windows" spec="4.4.2" />
+  <plugin name="cordova-plugin-inappbrowser" spec="~1.5.0" />
+  <plugin name="cordova-sqlite-storage" spec="~2.2.0" />
 </widget>

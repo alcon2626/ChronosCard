@@ -22,7 +22,7 @@
     <meta charset="utf-8" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <meta http-equiv="Content-Security-Policy" data: gap: https://chronoscard.azurewebsites.net; style-src 'self'; media-src *">
+    <meta http-equiv="Content-Security-Policy" data: gap: https://capstoneapplication.azurewebsites.net; style-src 'self'; media-src *">
     <link rel="stylesheet" type="text/css" href="css/employees.css" />
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" href="../../jqwidgets/styles/jqx.base.css" type="text/css" />
@@ -35,10 +35,14 @@
             <h1 id="app-title">ChronosLog</h1>
             <a href="/index.html" class="ui-btn ui-btn-left ui-btn-corner-all ui-icon-home ui-btn-icon-notext" rel="external">Home</a>
         </div>
-        <div>Welcome to the employess page, below a list of employees will display <br /> once we load all the employees for the current user's company.</div>
+        <div style="margin:7px;"> 
+            Welcome to the employess page, below a list of employees for the current user's company. 
+            We can click on a name and navigate to a page where we can see a more detailed view of the selected employee and
+            manage him/her.
+        </div>
         <br />
         <br />
-        <div id="jqxgrid"></div>
+        <div id="jqxgrid" style="margin:auto"></div>
         <footer data-role="footer" data-position="fixed">
             <h4>Chronoslog Time Card &reg; 2019</h4>
         </footer>
