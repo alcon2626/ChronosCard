@@ -121,15 +121,7 @@
  * @returns {void}
  */
     function populateInfo(items) {
-        $("#emplfname").text("First Name: " + items[0].cE_FirstName);
-        $("#empllname").text("Last Name: " + items[0].cE_LastName);
-        $("#empladdress1").text("Address1: " + items[0].cE_Address1);
-        $("#empladdress2").text("Address2: " + items[0].cE_Address2);
-        $("#emplcity").text("City: " + items[0].cE_City);
-        $("#emplstate").text("State: " + items[0].cE_State);
-        $("#emplzip").text("Zip: " + items[0].cE_Zip);
-        $("#emplstatus").text("Deleted: " + items[0].deleted);
-        $("#emplimage").attr("src", items[0].cE_Image);
+        console.log(items);
     }
 
 
@@ -156,22 +148,6 @@
         alert('Query variable %s not found', variable);
     }
 
-    window.deleteEmployee = function () {
-        jConfirm('Are you sure that you want to delete this employee?', 'Confirmation Dialog', function (r) {
-            if (r) {
-                deleteItemHandler(emplid)
-            } else {
-                //do nothing
-            }
-        });        
-    }
-
-    function deleteItemHandler(itemId) { 
-        todoItemTable
-            .del({ cE_ID: itemId })   // Async send the deletion to backend
-            .then(window.location.href = "/employees.html?sUSR_ID=" + window.sUSR_ID, handleError); // Update the UI
-        event.preventDefault();
-    }
     window.navigate = function (flag) {
         if (flag) {
             jConfirm('Are you sure that you want to exit the app?', 'Confirmation Dialog', function (r) {

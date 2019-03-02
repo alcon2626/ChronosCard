@@ -23,7 +23,7 @@
         syncContext, // Offline data sync context
         tableName = 'Company_Employees',
         todoItemTable; // Reference to a table endpoint on backend
-    var sUSR_ID;
+    window.sUSR_ID;
     // Set useOfflineSync to true to use tables from local store.
     // Set useOfflineSync to false to use tables on the server.
     var useOfflineSync = false;
@@ -101,8 +101,8 @@
             todoItemTable = client.getTable(tableName);
         }
 
-        sUSR_ID = getQueryVariable('sUSR_ID');
-        getItems(sUSR_ID);
+        window.sUSR_ID = getQueryVariable('sUSR_ID');
+        getItems(window.sUSR_ID);
     }
     function getItems(sUSR_ID) {
         // Execute a query for uncompleted items and process
@@ -186,6 +186,20 @@
 
     window.customNavigation = function (emplid) {
         console.log(emplid);
-        window.location.href = "/employee.html?emplid=" + emplid + "&sUSR_ID=" + sUSR_ID;
+        window.location.href = "/employee.html?emplid=" + emplid + "&sUSR_ID=" + window.sUSR_ID;
+    }
+
+    window.navigate = function (flag) {
+        if (flag) {
+            jConfirm('Are you sure that you want to exit the app?', 'Confirmation Dialog', function (r) {
+                if (r) {
+                    window.location.href = "/index.html";
+                } else {
+                    //do nothing
+                }
+            });
+        } else {
+            window.location.href = "/employees.html?sUSR_ID=" + window.sUSR_ID
+        }
     }
 })();

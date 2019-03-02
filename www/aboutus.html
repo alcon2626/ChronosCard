@@ -20,12 +20,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Content-Security-Policy" data: gap: https://capstoneapplication.azurewebsites.net; style-src 'self'; media-src *">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://capstoneapplication.azurewebsites.net; style-src 'self'; media-src *">
     <meta name="format-detection" content="telephone=no" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="css/employee.css" />
+    <link rel="stylesheet" type="text/css" href="css/about.css" />
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
-    <link href="css/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
     <title>ChronosCard</title>
 </head>
 <body>
@@ -36,23 +35,21 @@
             <a href="" onclick="navigate(false)" class="ui-btn ui-btn-left ui-btn-corner-all ui-icon-home ui-btn-icon-notext" rel="external">Home</a>
             <a href="" onclick="navigate(true)" class="ui-btn ui-btn-right ui-btn-corner-all ui-icon-action ui-btn-icon-notext" rel="external">Exit</a>
         </div>
-        <div style="margin:5px; align-content:center"><img id="emplimage"  class="imageemployee" src="/www/css/images/splash_icon.png"></div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <div class="centerinfo">
-            <label id="emplfname"></label>
-            <label id="empllname"></label>
-            <label id="empladdress1"></label>
-            <label id="empladdress2"></label>
-            <label id="emplcity"></label>
-            <label id="emplstate"></label>
-            <label id="emplzip"></label>
-            <label id="emplstatus"></label>
-            <br />
-            <br />
-            <button onclick="deleteEmployee()">Delete Employee</button>
+
+        <div role="main" class="ui-content">
+            <h1 style="text-align: center;">&nbsp;About ChronosLog and its milestones</h1>
+            <p>&nbsp;</p>
+            <p style="text-align: center;"><span style="font-size: 18px;">ChronosLog is a cloud-first software company that helps teams at 12,000+ companies—SMBs and large-scale 
+                enterprises—collaborate, plan and schedule resources, manage budgets, and track time directly from their daily workflow. 
+                ChronosLog started as a homegrown time tracking solution, which offered our software and business teams seamless integration with Jira. 
+                It changed the way we worked.&nbsp;</span><br><br><span style="font-size: 18px;">We quickly realized this technology could help every team 
+                and business gain visibility over their work efforts for better collaboration and decision-making. Today, ChronosLog is a team of 100 peers with offices 
+                in Reykjavík, Iceland and Montréal, Canada.&nbsp;</span><br><br>
+                <span style="font-size: 18px;">We are one of the largest, award-winning, top-selling developers in the Atlassian ecosystem. 
+                    ChronosLog offers three efficiency and visibility-enhancing products that extend Jira to help IT, software development, consultancy, 
+                    and business teams work smarter.
+                 </span>
+            </p>
         </div>
 
         <footer data-role="footer" data-position="fixed">
@@ -67,9 +64,8 @@
 
     <!-- ChronosCard references -->
     <script src="services/mobileApps/settings/ChronosCard.js"></script>
-    <script type="text/javascript" src="js/employee.js"></script>
+    <script type="text/javascript" src="js/aboutus.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
-    <script src="js/jquery.alerts.js" type="text/javascript"></script>
 </body>
 </html>
