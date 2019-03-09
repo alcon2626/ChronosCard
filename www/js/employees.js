@@ -37,6 +37,7 @@
      * @event
      */
     function onDeviceReady() {
+        buildGrid('');
         // Create a connection reference to our Azure Mobile Apps backend 
         client = new WindowsAzure.MobileServiceClient('https://capstoneapplication.azurewebsites.net');
 
@@ -107,7 +108,7 @@
     function getItems(sUSR_ID) {
         // Execute a query for uncompleted items and process
         todoItemTable
-            .where({ deleted: false, sCT_ID: sUSR_ID })     // Set up the query
+            .where({ sCT_ID: sUSR_ID }) //deleted: false,    // Set up the query
             .read()                         // Read the results
             .then(buildGrid, handleError);
     }
@@ -131,15 +132,19 @@
  */
     function buildGrid(items) {
         var datastring = "[";
-        for (var i = 0; i < items.length; i++) {
-            datastring +=
-                '{"emplname":"' + items[i].cE_FirstName + ' ' + items[i].cE_LastName
-                + '","empladdress":"' + items[i].cE_Address1 + ' ' + items[i].cE_City + ' ' + items[i].cE_State + ' ' + items[i].cE_Zip
-                + '","empldeleted":"' + items[i].deleted
-                + '","emplid":"' + items[i].cE_ID +'"},'
-        }
-        datastring = datastring.slice(0, -1);
-        datastring += "]";
+        if (items === '') {
+            datastring = '{}';
+        } else {
+            for (var i = 0; i < items.length; i++) {
+                datastring +=
+                    '{"emplname":"' + items[i].cE_FirstName + ' ' + items[i].cE_LastName
+                    + '","empladdress":"' + items[i].cE_Address1 + ' ' + items[i].cE_City + ' ' + items[i].cE_State + ' ' + items[i].cE_Zip
+                    + '","empldeleted":"' + items[i].deleted
+                    + '","emplid":"' + items[i].cE_ID + '"},'
+            }
+            datastring = datastring.slice(0, -1);
+            datastring += "]";
+        }        
         var data = $.parseJSON(datastring);
         var docsource = {
             datatype: 'json',

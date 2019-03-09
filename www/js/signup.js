@@ -44,7 +44,8 @@
         password = $("#password");
         email = $("#email");
         // Create a connection reference to our Azure Mobile Apps backend 
-        client = new WindowsAzure.MobileServiceClient('https://chronoscard.azurewebsites.net');
+        client = new WindowsAzure.MobileServiceClient('https://capstoneapplication.azurewebsites.net');
+
 
         if (useOfflineSync) {
             initializeStore().then(setup);
@@ -100,8 +101,10 @@
         // Create a table reference
         if (useOfflineSync) {
             todoItemTable = client.getSyncTable(tableName);
+            console.log('using offline db');
         } else {
             todoItemTable = client.getTable(tableName);
+            console.log('using online db');
         }
 
         // Wire up the UI Event Handler for the Add Item
@@ -151,7 +154,6 @@
 
     function pushItem() {
         todoItemTable.insert({
-
             sUSR_Email: email.val(),
             sUSR_logInName: username.val(),
             sUSR_Password: password.val()
